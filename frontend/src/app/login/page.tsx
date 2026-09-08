@@ -43,7 +43,7 @@ export default function LoginPage() {
 
     try {
       await login({ email, password });
-      router.push("/");
+      router.push("/dashboard")
     } catch (err: any) {
       setError(err.message || "Invalid email or password");
     } finally {
@@ -56,7 +56,7 @@ export default function LoginPage() {
     setIsDemoSubmitting(true);
     try {
       await demoLogin();
-      router.push("/");
+      router.push("/dashboard")
     } catch (err: any) {
       setError(err.message || "Failed to initialize demo session");
     } finally {
@@ -157,6 +157,7 @@ export default function LoginPage() {
           )}
 
           {/* Login Form */}
+          {isSubmitting && <LoadingOverlay />}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-mono uppercase tracking-wider text-[#D9D9D9]/70 mb-1.5">

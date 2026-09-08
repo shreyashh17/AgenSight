@@ -122,6 +122,25 @@ export function Header({ onOpenCommandPalette, onOpenMobileMenu }: HeaderProps) 
                 </div>
 
                 <div className="py-1">
+                  {/* Dashboard */}
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setProfileOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2 text-xs text-[#C0C0C0] hover:text-white hover:bg-white/5 transition-colors"
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5 text-[#8E92A0]" />
+                    <span>Dashboard</span>
+                  </Link>
+                  {/* Profile */}
+                  <Link
+                    href="/profile"
+                    onClick={() => setProfileOpen(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2 text-xs text-[#C0C0C0] hover:text-white hover:bg-white/5 transition-colors"
+                  >
+                    <UserCircle className="w-3.5 h-3.5 text-[#8E92A0]" />
+                    <span>My Profile</span>
+                  </Link>
+                  {/* Settings */}
                   <Link
                     href="/settings"
                     onClick={() => setProfileOpen(false)}

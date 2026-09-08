@@ -40,6 +40,8 @@ class ResearchPipeline:
         )
 
         if should_use_mock:
+            mock_final_data = {}
+            mock_tokens = 0
             async for event in mock_pipeline.run(
                 topic=topic,
                 tone=tone,
@@ -50,11 +52,27 @@ class ResearchPipeline:
                 # Save event to DB if db session provided
                 if db:
                     await self._record_event(db, session_id, event)
+                if event.agent == AgentType.ORCHESTRATOR and event.event_type == EventType.COMPLETE:
+                    mock_final_data = event.data or {}
+                    mock_tokens = event.tokens
                 yield event
 
             elapsed = round(time.time() - start_time, 2)
             if db:
-                await self._finalize_session(db, session_id, elapsed)
+                await self._finalize_session(
+                    db,
+                    session_id,
+                    elapsed,
+                    report_title=mock_final_data.get("title", topic),
+                    report_content=mock_final_data.get("report_content", ""),
+                    score=mock_final_data.get("score", 9.0),
+                    verdict=mock_final_data.get("verdict", ""),
+                    strengths=mock_final_data.get("strengths", []),
+                    improvements=mock_final_data.get("improvements", []),
+                    sources=mock_final_data.get("sources", []),
+                    total_tokens=mock_tokens or mock_final_data.get("total_tokens", 3800),
+                    cost=mock_final_data.get("estimated_cost", 0.0035)
+                )
             return
 
         # Real multi-agent execution

@@ -27,14 +27,22 @@ class Settings(BaseSettings):
     DEFAULT_MAX_SOURCES: int = 5
     ENABLE_MOCK_FALLBACK: bool = True  # Auto-fallback to mock mode if keys missing
 
-    # CORS
+    # CORS — FRONTEND_URL env var is added dynamically for production
     BACKEND_CORS_ORIGINS: list[str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:8000",
         "http://127.0.0.1:8000",
-        "*"
     ]
+
+    @property
+    def all_cors_origins(self) -> list[str]:
+        """Return CORS origins including the deployed frontend URL."""
+        origins = self.BACKEND_CORS_ORIGINS.copy()
+        frontend_url = os.getenv("FRONTEND_URL", "")
+        if frontend_url:
+            origins.append(frontend_url)
+        return origins
 
     class Config:
         case_sensitive = True

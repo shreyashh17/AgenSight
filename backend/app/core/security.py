@@ -3,7 +3,9 @@ import jwt
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
 
-SECRET_KEY = "agentsight_secure_jwt_secret_key_change_in_production"
+import os
+
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "agentsight_secure_jwt_secret_key_change_in_production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 

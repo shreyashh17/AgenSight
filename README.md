@@ -58,6 +58,20 @@
 
 ---
 
+## ☁️ Cloud Deployment (One-Click)
+
+The easiest way to deploy InsightForge is by using the one-click deploy buttons below. 
+
+1. **Deploy the Backend** to Render (this will also provision a PostgreSQL database automatically).
+2. **Deploy the Frontend** to Vercel. (You will need the backend URL from step 1 for the `NEXT_PUBLIC_API_URL` environment variable).
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone)
+
+*(Make sure to update the `FRONTEND_URL` environment variable in Render after your Vercel frontend is deployed!)*
+
+---
+
 ## 🚀 Quickstart Guide
 
 ### Option 1: Local Development

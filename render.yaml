@@ -6,6 +6,10 @@ services:
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python seed_data.py || true
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.9"
@@ -14,7 +18,7 @@ services:
       - key: DEBUG
         value: "False"
       - key: DATABASE_URL
-        value: sqlite+aiosqlite:///./insightforge.db
+        value: sqlite+aiosqlite:////data/insightforge.db
       - key: DEFAULT_MODEL
         value: gpt-4o-mini
       - key: OPENAI_API_KEY
